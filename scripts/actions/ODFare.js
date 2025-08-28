@@ -6,13 +6,6 @@ const path = require("path");
 
 const ODFares_Folder = path.join(process.cwd(), "TRA", "ODFare")
 
-const drawProgressBar = (progress) => {
-    const barWidth = 30;
-    const filledWidth = Math.floor(progress / 100 * barWidth);
-    const emptyWidth = barWidth - filledWidth;
-    const progressBar = '█'.repeat(filledWidth) + '▒'.repeat(emptyWidth);
-    return `[${progressBar}] ${progress}%`;
-}
 module.exports = {
     name: "ODFare",
     action: async () => {
@@ -66,7 +59,7 @@ module.exports = {
             await fs.writeFileSync(JSON_PATH, JSON.stringify(json));
             // 超美麗
             if (i % 10000 == 0) {
-                console.log(`Progress: ${drawProgressBar(Math.round(ODFares_len / i) )} (${i}/${ODFares_len})`)
+                console.log(`Progress: ${i}/${ODFares_len} ${Math.round(ODFares_len / i)}%`)
             }
             
         }
