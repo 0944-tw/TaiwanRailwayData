@@ -33,7 +33,27 @@ module.exports = {
             if (!(await fs.existsSync(path.join(ODFares_Folder, OriginStationID)))) await fs.mkdirSync(path.join(ODFares_Folder, OriginStationID))
             // 搞錯ㄌ if (!(await fs.existsSync(path.join(ODFares_Folder, OriginStationID,DestinationStationID)))) await fs.mkdirSync(path.join(ODFares_Folder, OriginStationID,DestinationStationID))
             // 超亂
-            await fs.writeFileSync(path.join(ODFares_Folder, OriginStationID,`${DestinationStationID}.json`),JSON.stringify(ODFare));
+            // 破防了，所有JSON檔都要重構好煩
+
+            const json = {
+                OriginStationID: ODFare["OriginStationID"],
+                OriginStationName: ODFare["OriginStationName"],
+                DestinationStationID: ODFare["DestinationStationID"],
+                DestinationStationName: ODFare["DestinationStationName"],
+                Direction: ODFare["Direction"],
+                TrainFares: [
+
+
+                ]
+            }
+
+            const FaresObject = {
+                TrainType: ODFare["TrainType"],
+                Fares: ODFare["Fares"]
+            }
+            
+
+            await fs.writeFileSync(path.join(ODFares_Folder, OriginStationID, `${DestinationStationID}.json`), JSON.stringify(ODFare));
             // 超美麗
             console.log(`Progress: ${i}/${ODFares_len}`)
         }
