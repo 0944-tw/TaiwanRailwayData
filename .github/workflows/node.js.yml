@@ -27,7 +27,7 @@ jobs:
         run: npm i express
 
       - name: Update TDX Data
-        run: node scripts/UpdateTDXData.js
+        run:  node scripts/UpdateTDXData.js
 
       - name: Commit and push changes
         run: |
