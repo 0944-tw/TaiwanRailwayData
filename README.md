@@ -22,7 +22,6 @@
         "En": "string"
       },
       "Direction": 0,
-      "TrainType": 0,
       "Fares": [
         {
           "TrainType": 0,
