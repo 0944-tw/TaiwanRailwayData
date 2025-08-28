@@ -5,11 +5,19 @@ const { finished } = require('stream/promises');
 const path = require("path");
 
 const ODFares_Folder = path.join(process.cwd(), "TRA", "ODFare")
+
+const drawProgressBar = (progress) => {
+    const barWidth = 30;
+    const filledWidth = Math.floor(progress / 100 * barWidth);
+    const emptyWidth = barWidth - filledWidth;
+    const progressBar = '█'.repeat(filledWidth) + '▒'.repeat(emptyWidth);
+    return `[${progressBar}] ${progress}%`;
+}
 module.exports = {
     name: "ODFare",
     action: async () => {
         var fileStream;
-        const should_download = true || !(await fs.existsSync("ODFare.json.gz"))
+        const should_download = false ?? !(await fs.existsSync("ODFare.json.gz"))
         if (should_download) {
             console.log("Downloading")
             const res = await fetch("https://tdx.transportdata.tw/api/basic/v3/Rail/TRA/ODFare", {
@@ -29,13 +37,13 @@ module.exports = {
             const ODFare = obj.ODFares[i];
             const OriginStationID = ODFare["OriginStationID"];
             const DestinationStationID = ODFare["DestinationStationID"]
-            console.log(`Processing: ${OriginStationID}/${DestinationStationID}.json`)
+            const JSON_PATH = path.join(ODFares_Folder, OriginStationID, `${DestinationStationID}.json`)
             if (!(await fs.existsSync(path.join(ODFares_Folder, OriginStationID)))) await fs.mkdirSync(path.join(ODFares_Folder, OriginStationID))
             // 搞錯ㄌ if (!(await fs.existsSync(path.join(ODFares_Folder, OriginStationID,DestinationStationID)))) await fs.mkdirSync(path.join(ODFares_Folder, OriginStationID,DestinationStationID))
             // 超亂
             // 破防了，所有JSON檔都要重構好煩
 
-            const json = {
+            var json = {
                 OriginStationID: ODFare["OriginStationID"],
                 OriginStationName: ODFare["OriginStationName"],
                 DestinationStationID: ODFare["DestinationStationID"],
@@ -46,16 +54,21 @@ module.exports = {
 
                 ]
             }
-
             const FaresObject = {
                 TrainType: ODFare["TrainType"],
                 Fares: ODFare["Fares"]
             }
             
-
-            await fs.writeFileSync(path.join(ODFares_Folder, OriginStationID, `${DestinationStationID}.json`), JSON.stringify(ODFare));
+            if (fs.existsSync(path.join(JSON_PATH))) {
+                json = JSON.parse((await fs.readFileSync(JSON_PATH)))
+            }
+            json.TrainFares.push(FaresObject)
+            await fs.writeFileSync(JSON_PATH, JSON.stringify(json));
             // 超美麗
-            console.log(`Progress: ${i}/${ODFares_len}`)
+            if (i % 10000 == 0) {
+                console.log(`Progress: ${drawProgressBar(Math.round(ODFares_len / i) )} (${i}/${ODFares_len})`)
+            }
+            
         }
     }
 }
