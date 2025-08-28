@@ -4,11 +4,6 @@ on:
   workflow_dispatch: # allows manual triggering
   schedule:
     - cron: '0 0 * * *' # runs every hour
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
 jobs:
   update-tdx:
     runs-on: ubuntu-latest
