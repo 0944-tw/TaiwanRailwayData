@@ -22,7 +22,7 @@
         "En": "string"
       },
       "Direction": 0,
-      "Fares": [
+      "TrainFares": [
         {
           "TrainType": 0,
           "Fares": [
