@@ -1,4 +1,6 @@
 # TaiwanRailwayData
+> [!WARNING]
+> 不推薦使用，`ODFare` 存在一些問題。待修復
 每日更新資訊
 將會更新以下資訊：
 - ODFare (票價）
