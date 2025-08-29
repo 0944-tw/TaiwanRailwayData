@@ -2,8 +2,8 @@ name: Update data from TDX
 
 on:
   workflow_dispatch: # allows manual triggering
-  schedule:
-    - cron:  "0 16 * * *" # runs every hour
+#  schedule:
+ #   - cron:  "0 16 * * *" # runs every hour
 jobs:
   update-tdx:
     runs-on: ubuntu-latest
