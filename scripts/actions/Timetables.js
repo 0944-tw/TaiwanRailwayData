@@ -4,7 +4,7 @@ const { Readable } = require('stream');
 const { finished } = require('stream/promises');
 const path = require("path");
 
-const DailyTrainTimetable_Folder = path.join(process.cwd(), "TRA", "DailyTrainTimetable")
+const DailyTrainTimetable_Folder = path.join(process.cwd(), "TRA", "DailyTrainTimetables")
 
 module.exports = {
     name: "DailyTrainTimetable",
@@ -24,9 +24,10 @@ module.exports = {
         const json = await res.json();
         const timetables = json["TrainTimetables"];
         const rows = timetables.length;
+        console.log(`Length: ${rows}`)
         const files = new Map();
-        for (let i = 0; i < rows.length; i++) {
-            files.set(i["TrainInfo"]["TrainNo"],timetables[i])
+        for (let i = 0; i < rows; i++) {
+            files.set(timetables[i]["TrainInfo"]["TrainNo"],timetables[i])
         }
         
         console.log("Writing Timetables")
