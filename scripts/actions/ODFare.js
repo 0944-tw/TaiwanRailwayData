@@ -10,7 +10,7 @@ module.exports = {
     name: "ODFare",
     action: async () => {
         var fileStream;
-        const should_download = false ?? !(await fs.existsSync("ODFare.json.gz"))
+        const should_download = undefined ?? !(await fs.existsSync("ODFare.json.gz"))
         if (should_download) {
             console.log("Downloading")
             const res = await fetch("https://tdx.transportdata.tw/api/basic/v3/Rail/TRA/ODFare", {
