@@ -36,7 +36,6 @@ module.exports = {
         const files = new Map();
         for (let i = 0; i < rows; i++) {
             const ODFare = obj.ODFares[i];
-            if (ODFare.Direction !== 1) continue;
             const fileKey = `${ODFare["OriginStationID"]}-${ODFare["DestinationStationID"]}`;
             var file = files.get(fileKey);
             if (!file) {
