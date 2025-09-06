@@ -50,7 +50,8 @@ module.exports = {
             }
             file.TrainFares.push({
                 TrainType: ODFare["TrainType"],
-                Fares: ODFare["Fares"]
+                Fares: ODFare["Fares"],
+                Direction: ODFare["Direction"]
             })
             files.set(fileKey,file)
         }
